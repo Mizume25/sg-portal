@@ -25,7 +25,7 @@ class NewsletterSignupForm extends FormBase
     /** Variable principal */
     protected Connection $DB;
 
-    /**
+    /**ss
      * Conexion con BD
      * @param Connection $DB
      */
