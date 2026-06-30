@@ -1,33 +1,37 @@
-
+# Dependencias (se reinstalan, no se versionan)
 /vendor/
 /node_modules/
+
+# Core de Drupal y librerías (no es tu código)
 /core/
 /modules/contrib/
 /themes/contrib/
 /profiles/contrib/
 /libraries/
 
-
+# Carpeta web vacía que creaste por error (bórrala si no tiene nada)
 /web/
 
+# Ficheros subidos y generados por el sitio
 /sites/*/files/
 /sites/*/private/
 /sites/*/translations/
 
-
+# Configuración sensible (contraseñas de BD, hash salt)
 /sites/*/settings.php
 /sites/*/settings.local.php
 /sites/*/services.yml
 
-
+# Drupal trae estos de ejemplo; ignora los reales
 /sites/default/files/
 
-
+# Sistema operativo / editor
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
 *.swp
 
+# Logs y temporales
 *.log
 /tmp/
