@@ -1,0 +1,5 @@
+name: Newsletter
+type: module
+description:  'Alta de suscriptores al Newslette'
+package: Custom
+core_version_requirement: ^9 || ^10 || ^11

@@ -1,0 +1,36 @@
+# Ruta para al fomrulario de creacion de usuario
+newsletter.signup:
+ path: '/newsletter'
+ defaults: 
+  _form: '\Drupal\newsletter\Form\NewsletterSignupForm'
+  _title: 'Alta en el Newsletter'
+ requirements:
+   _access: 'TRUE'
+
+# Listado de subscripciones
+newsletter.admin:
+ path: '/admin/content/newsletter'
+ defaults: 
+  _form: '\Drupal\newsletter\Controller\NewsletterAdminController::listSubscribers'
+  _title: 'Subcriptores del Newsletter'
+ requirements:
+   _permission: 'Control de subcripciones'
+
+# Exportar a CSV (solo con permiso).
+newsletter.export:
+  path: '/admin/content/newsletter/export'
+  defaults:
+    _controller: '\Drupal\newsletter\Controller\NewsletterAdminController::exportCsv'
+    _title: 'Exportar suscriptores'
+  requirements:
+    _permission: 'manage newsletter subscribers'
+
+# Borrar un suscriptor (con confirmación). {id} es el registro a borrar.
+newsletter.delete:
+  path: '/admin/content/newsletter/{id}/delete'
+  defaults:
+    _form: '\Drupal\newsletter\Form\SubscriberDeleteForm'
+    _title: 'Eliminar suscriptor'
+  requirements:
+    _permission: 'manage newsletter subscribers'
+

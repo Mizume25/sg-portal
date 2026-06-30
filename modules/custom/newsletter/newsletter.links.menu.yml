@@ -1,0 +1,7 @@
+# Links Dinamicos
+newsletter.admin:
+  title: 'Newsletter'
+  description: 'Gestiona los suscriptores del newsletter.'
+  parent: system.admin_content
+  route_name: newsletter.admin
+  weight: 10

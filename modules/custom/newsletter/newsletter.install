@@ -1,0 +1,40 @@
+<?php 
+
+/**
+ * 
+ * Instalacion del modulo newletter
+ */
+
+
+function newsletter_schema(){
+    
+$schema['newsletter_subscribers'] = [
+  'description' => 'Almacena los emails dados de alta en el newsletter.',
+  'fields' => [
+    'id' => [
+      'description' => 'Id unico del registro',
+      'type' => 'serial',
+      'unsigned' => TRUE,
+      'not null' => TRUE,
+    ],
+    'email' => [
+      'type' => 'varchar',
+      'length' => 255,
+      'not null' => TRUE,
+      'description' => 'Email del suscriptor.',
+    ],
+    'created' => [
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+      'description' => 'Fecha de alta (timestamp).',
+    ],
+  ],
+  'primary key' => ['id'],
+  'unique keys' => [
+    'email' => ['email'],
+  ],
+];
+}
+
+?>

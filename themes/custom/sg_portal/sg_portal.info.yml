@@ -1,0 +1,21 @@
+# Informacion General
+name: 'Sg-Portal'
+type: theme
+description: 'Tema para prueba técnica Studiogenesis'
+core_version_requirement: ^10
+base theme: bootstrap5
+libraries:
+  - sg_portal/global
+# Regiones de página
+regions:
+  header: 'Header'
+  nav_branding: 'Navigation branding'
+  nav_main: 'Navigation main'
+  nav_additional: 'Navigation additional'
+  breadcrumb: 'Breadcrumb'
+  highlighted: 'Highlighted'
+  content: 'Content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: 'Footer'
+  
