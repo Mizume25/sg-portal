@@ -7,7 +7,6 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Override;
 
 /**
  * Fomrulario de confirmacion de eliminacion

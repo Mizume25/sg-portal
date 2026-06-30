@@ -6,7 +6,7 @@
  */
 
 
-function newsletter_schema(){
+function newsletter_schema() {
     
 $schema['newsletter_subscribers'] = [
   'description' => 'Almacena los emails dados de alta en el newsletter.',
@@ -16,6 +16,13 @@ $schema['newsletter_subscribers'] = [
       'type' => 'serial',
       'unsigned' => TRUE,
       'not null' => TRUE,
+    ],
+    'nickname' => [
+      'type' => 'varchar',
+      'length' => 255,
+      'not null' => TRUE,
+
+      'description' => 'NickName de un suscriptor',
     ],
     'email' => [
       'type' => 'varchar',
@@ -33,8 +40,10 @@ $schema['newsletter_subscribers'] = [
   'primary key' => ['id'],
   'unique keys' => [
     'email' => ['email'],
+    'nickname' => ['nickname'],
   ],
 ];
-}
 
-?>
+return $schema;
+
+}

@@ -63,12 +63,19 @@ class NewsletterSignupForm extends FormBase
      */
     public function buildForm(array $form, FormStateInterface $form_state)
     {
+
+    /** Campo de nicknam */
+        $form['nickname'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Tu nickname'), 
+            '#required' => TRUE,
+        ];
         /**
          * Validando campo de correo electronico
          */
         $form['email'] = [
             '#type' => 'email',
-            '#title' => $this->t('Tu correo eletronico'), //Traduccion
+            '#title' => $this->t('Tu correo eletronico'), 
             '#required' => TRUE,
         ];
 
@@ -80,6 +87,8 @@ class NewsletterSignupForm extends FormBase
             '#type' => 'submit',
             '#value' => $this->t('Suscribirme'),
         ];
+
+        return $form;
     }
 
 
@@ -91,13 +100,22 @@ class NewsletterSignupForm extends FormBase
      */
     public function validateForm(array &$form, FormStateInterface $form_state)
     {
-        $exist = $this->DB->select('newsletter_subscribers', 'n')
+        $existEmail = $this->DB->select('newsletter_subscribers', 'n')
             ->fields('n', ['id'])
             ->condition('email', $form_state->getValue('email'))
             ->execute()
             ->fetchField();
 
-        if ($exist) $form_state->setErrorByName('email', $this->t('Este email ya esta suscrito'));
+        if ($existEmail) $form_state->setErrorByName('email', $this->t('Este email ya esta suscrito'));
+
+
+        $existNickName = $this->DB->select('newsletter_subscribers', 'n')
+            ->fields('n', ['id'])
+            ->condition('nickname', $form_state->getValue('nickname'))
+            ->execute()
+            ->fetchField();
+
+        if ($existNickName) $form_state->setErrorByName('nickname', $this->t('Este nickname ya esta suscrito'));
     }
 
 
@@ -111,6 +129,7 @@ class NewsletterSignupForm extends FormBase
     {
         $this->DB->insert('newsletter_subscribers')
             ->fields([
+                'nickname' => $form_state->getValue('nickname'),
                 'email' => $form_state->getValue('email'),
                 'created' => Drupal::time()->getRequestTime(),
             ])

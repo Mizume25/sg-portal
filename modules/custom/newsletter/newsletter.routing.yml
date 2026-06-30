@@ -3,18 +3,18 @@ newsletter.signup:
  path: '/newsletter'
  defaults: 
   _form: '\Drupal\newsletter\Form\NewsletterSignupForm'
-  _title: 'Alta en el Newsletter'
+  _title: 'Alta en Newsletter'
  requirements:
    _access: 'TRUE'
 
 # Listado de subscripciones
 newsletter.admin:
  path: '/admin/content/newsletter'
- defaults: 
-  _form: '\Drupal\newsletter\Controller\NewsletterAdminController::listSubscribers'
+ defaults:
+  _controller: '\Drupal\newsletter\Controller\NewsletterAdminController::listSubs'
   _title: 'Subcriptores del Newsletter'
  requirements:
-   _permission: 'Control de subcripciones'
+   _permission: 'manage newsletter subscribers'
 
 # Exportar a CSV (solo con permiso).
 newsletter.export:
