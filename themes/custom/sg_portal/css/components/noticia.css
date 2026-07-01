@@ -1,0 +1,19 @@
+a {
+    all: unset;
+}
+
+.enlarge  {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.enlarge:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+
+
+/** Contenido dentro de la clase especifica */
+.field--name-field-categoria > * {
+    font-size: large;
+}

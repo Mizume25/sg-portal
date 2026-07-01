@@ -1,21 +1,24 @@
-# Informacion General
-name: 'Sg-Portal'
+name: 'Sg Portal'
 type: theme
-description: 'Tema para prueba técnica Studiogenesis'
-core_version_requirement: ^10
-base theme: bootstrap5
+description: 'Sg Portal subtheme based on Bootstrap 5 theme.'
+core_version_requirement: '^10.1 || ^11.0'
+'base theme': bootstrap5
 libraries:
-  - sg_portal/global
-# Regiones de página
+  - sg_portal/global-styling
+ckeditor_stylesheets:
+  - css/style.css
+ckeditor5-stylesheets:
+  - css/ck5style.css
 regions:
-  header: 'Header'
-  nav_branding: 'Navigation branding'
-  nav_main: 'Navigation main'
-  nav_additional: 'Navigation additional'
-  breadcrumb: 'Breadcrumb'
-  highlighted: 'Highlighted'
-  content: 'Content'
+  header: Header
+  nav_branding: 'Navigation branding region'
+  nav_main: 'Main navigation region'
+  nav_additional: 'Additional navigation region (eg search form, social icons, etc)'
+  breadcrumb: Breadcrumbs
+  content: 'Main content'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
-  footer: 'Footer'
-  
+  footer: Footer
+libraries-override:
+  bootstrap5/global-styling: false
+  bootstrap5/ckeditor5-stylesheets: false

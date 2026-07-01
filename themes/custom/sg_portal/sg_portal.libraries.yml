@@ -1,5 +1,17 @@
-global:
-  version: 1.x
+global-styling:
   css:
     theme:
       css/style.css: {}
+      css/components/noticia.css: {}
+
+# Fuente Lexend
+global-fonts:
+  remote: https://fonts.google.com/specimen/Lexend
+  version: 1.x
+  license:
+    name: OFL-1.1
+    url: https://scripts.sil.org/OFL
+    gpl-compatible: true
+  css:
+    theme:
+      https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap: { type: external, minified: true }
