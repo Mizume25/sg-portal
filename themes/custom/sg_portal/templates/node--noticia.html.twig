@@ -1,39 +1,54 @@
+
+<!--- Node de "noticia"-->
 <article{{attributes.addClass('card','mb-4','shadow-sm')}}>
-	<div class="card-body rounded-4">
+	<div class="card-body rounded-4 p-4">
+		
+   
+    <!-- Header -->
+    <div class="card-header">
+    <!-- Titlo -->
+			<h2 class="card-title">{{ label }}</h2>
+      
+       <!-- Subtitulo -->
+			
+				<h5 class="card-subtitle mb-2 text-muted">
+					{{ content.field_sub }}
+				</h5>
+	
+      <!-- Categoria -->
+			
+				<span class="badge {{ badge_class }} mb-2 px-3 py-1 enlarge ">
+					{{ content.field_tipo_noticia }}
+				</span>
+			
 
-		<h2 class="card-title">{{ label }}</h2>
-
-		{% if content.field_categoria %}
-			<span class="badge bg-secondary mb-2 px-3 py-1 enlarge">
-				{{ content.field_categoria }}
-			</span>
-		{% endif %}
-
-
-		{% if content.field_sub %}
-			<h5 class="card-subtitle mb-2 text-muted">
-				{{ content.field_sub }}
-			</h5>
-		{% endif %}
-
-		{% if content.field_autor %}
-			<p class="text-uppercase small text-secondary">
+      <!-- Autor -->
+			<p class="text text-secondary">
 				Written by
-				<span class="text-dark fw-bold text-normal">{{ content.field_autor }}</span>
+				<span class="text-dark fw-bold text-normal">{{ node.field_autor.value }}
+				</span>
 			</p>
-		{%  endif %}
 
 
-		<div class="card-text">
-			{{ content.body }}
 		</div>
+   
+    <section class="w-auto bg-body-secondary mt-2 p-4 rounded custom-height">
+			{{ content.body }}
+    </section>
 
 
-		{% if content.field_archivos %}
-			<div class="mt-40">
-				{{ content.field_archivos }}
+    
+
+  <footer class="card-footer">
+  <div class="mt-40">
+			<a class="enlarge">	{{ content.field_archivos }}</a>
 			</div>
-		{% endif %}
+  
+  </footer>
+
+
+		
+		
 
 	</div>
 </article>

@@ -19,28 +19,23 @@ use Drupal\node\Entity\Node;
  */
 function sg_portal_preprocess_node__noticia(array &$variables)
 {
-    if ($variables['node']->bundle() === 'noticia') {
-        $variables['#attached']['library'][] = 'sg_portal/noticia';
+    $node = $variables['node'];
+
+    switch ($node->bundle()) {
+        case 'noticia':
+            $variables['#attached']['library'][] = 'sg_portal/noticia';
+
+            if (!$node->get('field_tipo_noticia')->isEmpty()) {
+                $variables['badge_class'] = match ($node->get('field_tipo_noticia')->entity->getName()) {
+                    'Novedades' => 'bg-success',
+                    'Rebajas' => 'bg-warning',
+                    default   => 'bg-secondary',
+                };
+            }
+            break;
+
+        default:
+
+            break;
     }
-}
-
-/**
- * Incializar valores planos
- */
-function initValues(Node $node, array $fields)
-{
-    $values = [];
-
-
-    foreach ($fields as $key => $value) {
-        if ($node->hasField($value) && !$node->get($value)->isEmpty()) {
-
-            $field = $node->get($value);
-            $values[$key] = $field->value;
-        } else {
-            $values[$key] = null;
-        }
-    }
-
-    return $values;
 }

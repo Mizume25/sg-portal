@@ -1,8 +1,19 @@
+/* Estilos unicos para la entidad "Noticia" **/
+
+/** Reincio */
 a {
     all: unset;
+    cursor: pointer;
 }
 
+
+/** Contenido dentro de la clase especifica */
+
+
+
+/* Pequeña animacion*/
 .enlarge  {
+  font-size: large;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -12,8 +23,13 @@ a {
 }
 
 
-
-/** Contenido dentro de la clase especifica */
-.field--name-field-categoria > * {
-    font-size: large;
+/* Contenedor */
+.content {
+    width: auto;
+    height: 80%;
+    background-color: rgb(221, 221, 221);
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    
 }
