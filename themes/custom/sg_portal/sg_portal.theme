@@ -1,0 +1,46 @@
+<?php
+
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Hooks renderizables en los nodos de Drupal
+ */
+
+/**
+ * 
+ * Sintaxi:
+ * sg_portal_preprocess_node__{Nombre}(array &$variables) 
+ * {
+ * }
+ */
+/**
+ * @param array $variables -> Referencia de array
+ */
+function sg_portal_preprocess_node__noticia(array &$variables)
+{
+    if ($variables['node']->bundle() === 'noticia') {
+        $variables['#attached']['library'][] = 'sg_portal/noticia';
+    }
+}
+
+/**
+ * Incializar valores planos
+ */
+function initValues(Node $node, array $fields)
+{
+    $values = [];
+
+
+    foreach ($fields as $key => $value) {
+        if ($node->hasField($value) && !$node->get($value)->isEmpty()) {
+
+            $field = $node->get($value);
+            $values[$key] = $field->value;
+        } else {
+            $values[$key] = null;
+        }
+    }
+
+    return $values;
+}
