@@ -14,28 +14,92 @@ use Drupal\node\Entity\Node;
  * {
  * }
  */
+
+/**
+ * Funcion auxiliar para esilizados dinamicos
+ * @param string $type 
+ */
+/**
+ * Funcion auxiliar para esilizados dinamicos
+ * @param string $type 
+ */
+function colorBadge(string $type)
+{
+    switch ($type) {
+        case 'Novedades':
+        case 'Domotica':
+            return 'bg-success';
+        case 'Rebajas':
+            return 'bg-warning';
+        case 'Transporte':
+            return 'bg-info';
+        default:
+            return 'bg-secondary';
+    }
+}
+
+
+/**
+ * Funcion de comprobacion de propeidades de Nodes
+ * @param Node $node
+ * @param string $field
+ */
+
+function isValidNode(Node $node, ?string $field): bool {
+  if ($field === null) return false;
+  if (!$node->hasField($field) || $node->get($field)->isEmpty()) return false;
+  if (!$node->get($field)->entity) return false;
+  return true;
+}
+
+
+
 /**
  * @param array $variables -> Referencia de array
+ * Funcion de nodos
  */
-function sg_portal_preprocess_node__noticia(array &$variables)
+function sg_portal_preprocess_node(array &$variables)
 {
     $node = $variables['node'];
+    $bundle = $node->bundle();
 
-    switch ($node->bundle()) {
-        case 'noticia':
-            $variables['#attached']['library'][] = 'sg_portal/noticia';
+    $fields = [
+    'noticia'  => 'field_tipo_noticia',
+    'producto' => 'field_tipo_productos',   
+    ];
 
-            if (!$node->get('field_tipo_noticia')->isEmpty()) {
-                $variables['badge_class'] = match ($node->get('field_tipo_noticia')->entity->getName()) {
-                    'Novedades' => 'bg-success',
-                    'Rebajas' => 'bg-warning',
-                    default   => 'bg-secondary',
-                };
-            }
-            break;
+    $variables['badge_class'] = 'bg-secondary';
 
-        default:
+    
+    if(!isset($fields[$bundle])) return;
 
-            break;
-    }
+    $field = $fields[$bundle];
+    
+
+    if(!isValidNode($node , $field)) return;
+
+    $type = $node->get($field)->entity;
+
+    $variables['badge_class'] = colorBadge($type->getName());
+
+    
+}
+
+/**
+ * Implements hook_preprocess_views_view_fields__noticias().
+ * Funcion de views
+ * @param array $variables
+ */
+function sg_portal_preprocess_views_view_fields__noticias(array &$variables) {
+  $node = $variables['row']->_entity;
+
+  $variables['badge_class'] = '';
+
+  $field = 'field_tipo_noticia';
+
+  if (!isValidNode($node, $field)) return;
+
+  $type = $node->get($field)->entity;
+
+  $variables['badge_class'] = colorBadge($type->getName());
 }

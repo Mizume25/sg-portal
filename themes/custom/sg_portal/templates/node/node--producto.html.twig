@@ -1,0 +1,54 @@
+<!--- Node de "noticia"-->
+<article{{attributes.addClass('card','mb-4','shadow-sm')}}>
+
+	<!--- Main -->
+
+
+	<!-- Contenido -->
+		<div
+		class="producto-card__gallery row g-2"> <!-- Imagenes -->
+		<div class="card-header">
+			<div id="carouselFotos" class="carousel slide bg-dark" data-bs-ride="false">
+				<div class="carousel-inner">
+					{% for item in node.field_foto %}
+						<div class="carousel-item {{ loop.first ? 'active' : '' }}">
+							<img src="{{ file_url(item.entity.field_media_image.entity.uri.value) }}" alt="{{ item.entity.field_media_image.alt }}" class="d-block w-100"/>
+						</div>
+					{% endfor %}
+				</div>
+
+				<!-- Botones -->
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselFotos" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</button>
+
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselFotos" data-bs-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</button>
+			</div>
+		</div>
+
+		<div
+			class="card-body rounded-4 p-4">
+			<!--Titulo -->
+			<h2 class="card-title">{{ label }}</h2>
+
+			<!--- Categoria Producto -->
+			<h5 class="badge {{ badge_class }} mb-2 px-3 py-1 bg-secondary fs-6 anime-scale ">
+				{{ content.field_tipo_productos }}
+			</h5>
+
+      <p class="fs-3 italic">{{ content.field_descripcion }}</p>
+
+       <p class="fs-2 fw-bold text-dark mb-0">{{ content.field_tarifa }}</p>
+
+
+			<section class=" w-auto bg-body-secondary mt-2 p-4 rounded custom-height">
+				{{ content.body }}
+			</section>
+
+
+		</div>
+
+
+	</article>
