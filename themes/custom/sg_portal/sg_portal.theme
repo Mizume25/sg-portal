@@ -103,3 +103,23 @@ function sg_portal_preprocess_views_view_fields__noticias(array &$variables) {
 
   $variables['badge_class'] = colorBadge($type->getName());
 }
+
+
+/**
+ * Implements hook_preprocess_views_view_fields__noticias().
+ * Funcion de views
+ * @param array $variables
+ */
+function sg_portal_preprocess_views_view_fields__productos(array &$variables) {
+  $node = $variables['row']->_entity;
+
+  $variables['badge_class'] = '';
+
+  $field = 'field_tipo_productos';
+
+  if (!isValidNode($node, $field)) return;
+
+  $type = $node->get($field)->entity;
+
+  $variables['badge_class'] = colorBadge($type->getName());
+}
