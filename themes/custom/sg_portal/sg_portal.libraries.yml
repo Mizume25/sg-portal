@@ -3,6 +3,7 @@ global-styling:
     theme:
       css/style.css: {}
       css/custom.css: {}
+      ../../contrib/bootstrap5/dist/icons/1.11.0/font/bootstrap-icons.css: {}
 
 # Fuente Lexend
 global-fonts:
