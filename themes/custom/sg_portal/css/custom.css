@@ -1,0 +1,17 @@
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+.anime-scale {
+  --scale-amount: 1.10;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(var(--scale-amount));
+    cursor: pointer;
+  }
+
+  &.anime-scale--badge { --scale-amount: 1.15; }
+  &.anime-scale--card { --scale-amount: 1.05; }
+}
