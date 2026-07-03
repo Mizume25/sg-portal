@@ -1,12 +1,18 @@
 <div class="card mb-3 anime-scale anime-scale--card">
-  <div class="card-body">
-    <h5 class="card-title">
-      {{ fields.title.content }}
-    </h5>
-    <span class="badge {{ badge_class }} mb-2 px-3 py-1 fs-6 ">
-				<i class="bi bi-tags-fill"></i>  {{ fields.field_tipo_noticia.content }}
-			</span>
-    <p>{{ fields.field_sub.content }}</p>
-    <p>{{ fields.field_fecha.content }}</p>
-  </div>
+	<div class="card-body">
+		<h3 class="card-title">
+			{{ fields.title.content }}
+		</h3>
+		<span class="badge {{ badge_class }} mb-2 px-3 py-1 fs-6 ">
+			<i class="bi bi-tags-fill"></i>
+			{{ fields.field_tipo_noticia.content }}
+		</span>
+
+		<div class="w-auto d-flex align-items-center justify-content-start gap-3">
+    		{{ fields.field_autor.content}}
+		
+			<p>{{ fields.field_fecha.content }}</p>
+		</div>
+
+	</div>
 </div>

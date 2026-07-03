@@ -7,29 +7,24 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\newsletter\NewsletterSubscriberStorage;
 
 /**
  * Fomrulario de confirmacion de eliminacion
  */
 class SubscriberDeleteForm extends ConfirmFormBase
 {
-    /** Id que recibimos */
-    protected string $id;
-    protected Connection $DB;
+    protected NewsletterSubscriberStorage $subscribers;
+    protected int $id;
 
-    public function __construct(Connection $DB)
+    public function __construct(NewsletterSubscriberStorage $subscribers)
     {
-        $this->DB = $DB;
+        $this->subscribers = $subscribers;
     }
 
-    /**
-     * Conexxion
-     */
     public static function create(ContainerInterface $container)
     {
-        return new static(
-            $container->get('database')
-        );
+        return new static($container->get('newsletter.subscriber_storage'));
     }
 
     /**
@@ -80,9 +75,7 @@ class SubscriberDeleteForm extends ConfirmFormBase
      */
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
-        $this->DB->delete('newsletter_subscribers')
-            ->condition('id', $this->id)
-            ->execute();
+        $this->subscribers->delete($this->id);
 
         $this->messenger()->addStatus($this->t('Suscriptor eliminado.'));
         $form_state->setRedirect('newsletter.admin');

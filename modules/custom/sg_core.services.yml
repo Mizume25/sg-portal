@@ -1,0 +1,5 @@
+services:
+  sg_core.badge_extension:
+    class: Drupal\sg_core\TwigExtension\BadgeExtension
+    tags:
+      - { name: twig.extension }

@@ -6,48 +6,22 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Symfony\Component\HttpFoundation\Response;
-use Drupal\Core\Database\Connection;
+use Drupal\newsletter\NewsletterSubscriberStorage;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal;
 
 class NewsletterAdminController  extends ControllerBase
 {
-    /** Variable principal */
-    protected Connection $DB;
+    protected NewsletterSubscriberStorage $subscribers;
 
-    /**
-     * Conexion con BD
-     * @param Connection $DB
-     */
-    public function __construct(Connection $DB)
+    public function __construct(NewsletterSubscriberStorage $subscribers)
     {
-        $this->DB = $DB;
+        $this->subscribers = $subscribers;
     }
 
-
-    /**
-     *  Habilitar servicios DATABASE
-     *  @param ContainerInterface $container
-     */
     public static function create(ContainerInterface $container)
     {
-        return new static(
-            $container->get('database')
-        );
-    }
-
-    /**
-     * 
-     * Funcion que obtiene todos los registros
-     */
-    private function getSubs()
-    {
-        $reg = $this->DB->select('newsletter_subscribers', 'n')
-            ->fields('n', ['id','nickname' , 'email', 'created'])
-            ->orderBy('created', 'DESC')
-            ->execute();
-
-        return $reg;
+        return new static($container->get('newsletter.subscriber_storage'));
     }
 
 
@@ -65,7 +39,7 @@ class NewsletterAdminController  extends ControllerBase
         ];
 
         /** Obtenemos registros */
-        $registers = $this->getSubs();
+        $registers = $this->subscribers->all();
 
 
         $rows = [];
@@ -74,13 +48,15 @@ class NewsletterAdminController  extends ControllerBase
         /** Itera datos */
         foreach ($registers as $reg) {
             $delete = Url::fromRoute('newsletter.delete', ['id' => $reg->id]);
+            $edit = Url::fromRoute('newsletter.edit', ['id' => $reg->id]);
 
             /** Construyendo los datos  */
-            $rows [] = [
+            $rows[] = [
                 $reg->id,
                 $reg->nickname,
                 $reg->email,
                 Drupal::service('date.formatter')->format($reg->created, 'short'),
+                Link::fromTextAndUrl($this->t('Editar'), $edit),
                 Link::fromTextAndUrl($this->t('Borrar'), $delete)
             ];
 
@@ -99,8 +75,6 @@ class NewsletterAdminController  extends ControllerBase
                 '#rows' => $rows,
                 '#empty' => $this->t('Todavía no hay suscriptores.'),
             ];
-
-            
         }
 
         return $build;
@@ -110,13 +84,13 @@ class NewsletterAdminController  extends ControllerBase
     public function exportCsv()
     {
 
-        $reg = $this->getSubs();
+        $reg = $this->subscribers->all();
 
         // Abrimos un "archivo" en memoria.
         $salida = fopen('php://temp', 'r+');
 
         // Fila de cabeceras del CSV.
-        fputcsv($salida, ['ID', 'NickName' ,  'Email', 'Fecha de alta']);
+        fputcsv($salida, ['ID', 'NickName',  'Email', 'Fecha de alta']);
 
         // Una fila por suscriptor.
         foreach ($reg as $r) {
