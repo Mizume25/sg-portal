@@ -2,6 +2,7 @@
 
 
 use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 
 /**
  * Hooks renderizables en los nodos de Drupal
@@ -16,30 +17,6 @@ use Drupal\node\Entity\Node;
  */
 
 /**
- * Funcion auxiliar para esilizados dinamicos
- * @param string $type 
- */
-/**
- * Funcion auxiliar para esilizados dinamicos
- * @param string $type 
- */
-function colorBadge(string $type)
-{
-    switch ($type) {
-        case 'Novedades':
-        case 'Domotica':
-            return 'bg-success';
-        case 'Rebajas':
-            return 'bg-warning';
-        case 'Transporte':
-            return 'bg-info';
-        default:
-            return 'bg-secondary';
-    }
-}
-
-
-/**
  * Funcion de comprobacion de propeidades de Nodes
  * @param Node $node
  * @param string $field
@@ -52,74 +29,31 @@ function isValidNode(Node $node, ?string $field): bool {
   return true;
 }
 
-
-
-/**
- * @param array $variables -> Referencia de array
- * Funcion de nodos
+/***
+ * Hook Generico
  */
-function sg_portal_preprocess_node(array &$variables)
-{
-    $node = $variables['node'];
-    $bundle = $node->bundle();
-
-    $fields = [
-    'noticia'  => 'field_tipo_noticia',
-    'producto' => 'field_tipo_productos',   
-    ];
-
-    $variables['badge_class'] = 'bg-secondary';
-
+function sg_portal_preprocess(array &$variables, $hook) {
     
-    if(!isset($fields[$bundle])) return;
+    /*** Obtenemos el Nodo */
+    $node = $variables['node'] ?? $variables['row']->_entity ?? NULL;
 
-    $field = $fields[$bundle];
-    
+    /** Si es nulo o no es un nodo, salimos */
+    if(!$node || !$node instanceof NodeInterface) return;
 
-    if(!isValidNode($node , $field)) return;
+    $badge = \Drupal::service('sg_core.badge_extension'); 
+
+    $variables['badge_class'] = NULL;
+
+    $field = $badge->getFieldForBundle($node->bundle());
+
+    if(!$field || !isValidNode($node , $field)) return;
 
     $type = $node->get($field)->entity;
 
-    $variables['badge_class'] = colorBadge($type->getName());
-
-    
-}
-
-/**
- * Implements hook_preprocess_views_view_fields__noticias().
- * Funcion de views
- * @param array $variables
- */
-function sg_portal_preprocess_views_view_fields__noticias(array &$variables) {
-  $node = $variables['row']->_entity;
-
-  $variables['badge_class'] = '';
-
-  $field = 'field_tipo_noticia';
-
-  if (!isValidNode($node, $field)) return;
-
-  $type = $node->get($field)->entity;
-
-  $variables['badge_class'] = colorBadge($type->getName());
+    $variables['#cache']['tags'][] = 'taxonomy_term:' . $type->id(); 
+    $variables['badge_class'] = $badge->getBadgeClass($type->getName());
+ 
 }
 
 
-/**
- * Implements hook_preprocess_views_view_fields__noticias().
- * Funcion de views
- * @param array $variables
- */
-function sg_portal_preprocess_views_view_fields__productos(array &$variables) {
-  $node = $variables['row']->_entity;
 
-  $variables['badge_class'] = '';
-
-  $field = 'field_tipo_productos';
-
-  if (!isValidNode($node, $field)) return;
-
-  $type = $node->get($field)->entity;
-
-  $variables['badge_class'] = colorBadge($type->getName());
-}
