@@ -1,27 +1,20 @@
 <?php
 
-/** Carpeta del objeto */
-
 namespace Drupal\newsletter\Form;
 
-/** Funciones de formulario */
 
 use Drupal\Core\Form\FormBase;
-
-/** Conneccion a BD */
-
-use Drupal\newsletter\NewsletterSubscriberStorage;
 use Drupal\Core\Form\FormStateInterface;
-
-/** Servicos de Base de datos */
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\newsletter\NewsletterSubscriberStorage;
 
-
-/** Objeto que manega altas de usuarios */
-class NewsletterSignupForm extends FormBase
+/**
+ * Fomrulario de confirmacion de eliminacion
+ */
+class SubscriberEditForm extends FormBase
 {
     protected NewsletterSubscriberStorage $subscribers;
+    protected int $id;
 
     public function __construct(NewsletterSubscriberStorage $subscribers)
     {
@@ -33,30 +26,35 @@ class NewsletterSignupForm extends FormBase
         return new static($container->get('newsletter.subscriber_storage'));
     }
 
-  
-
-
-
     /**
-     * Id de Fomrulario
+     * Obtener id
      */
     public function getFormId()
     {
-        return 'newsletter_signup_form';
+        return 'newsletter_subscriber_edit_form';
     }
 
 
+
     /**
-     * $form array de campos
-     * FormStateInterface  
+     * Recibir id de la ruta y lo guarda
+     * @param array $form
+     * @param FormStateInterface $form_state
      */
-    public function buildForm(array $form, FormStateInterface $form_state)
+
+    public function buildForm(array $form, FormStateInterface $form_state, $id = null)
     {
+        $this->id = $id;
+
+        $user = $this->subscribers->get($this->id);
+
+        if (!$user) return [];
 
         /** Campo de nicknam */
         $form['nickname'] = [
             '#type' => 'textfield',
             '#title' => $this->t('Tu nickname'),
+            '#default_value' => $user['nickname'],
             '#required' => TRUE,
         ];
         /**
@@ -65,6 +63,7 @@ class NewsletterSignupForm extends FormBase
         $form['email'] = [
             '#type' => 'email',
             '#title' => $this->t('Tu correo eletronico'),
+            '#default_value' => $user['email'],
             '#required' => TRUE,
         ];
 
@@ -74,12 +73,11 @@ class NewsletterSignupForm extends FormBase
         /** Action */
         $form['actions']['submit'] = [
             '#type' => 'submit',
-            '#value' => $this->t('Suscribirme'),
+            '#value' => $this->t('Actalizar'),
         ];
 
         return $form;
     }
-
 
     /** 
      * Validacion de datos
@@ -89,11 +87,11 @@ class NewsletterSignupForm extends FormBase
      */
     public function validateForm(array &$form, FormStateInterface $form_state)
     {
-        $email = $this->subscribers->exists('email', $form_state->getValue('email'));
+        $email = $this->subscribers->exists('email', $form_state->getValue('email'), $this->id);
 
         if ($email) $form_state->setErrorByName('email', $this->t('Este email ya esta suscrito'));
 
-        $nickname = $this->subscribers->exists('nickname', $form_state->getValue('nickname'));
+        $nickname = $this->subscribers->exists('nickname', $form_state->getValue('nickname'), $this->id);
 
         if ($nickname) $form_state->setErrorByName('nickname', $this->t('Este nickname ya esta suscrito'));
     }
@@ -101,18 +99,18 @@ class NewsletterSignupForm extends FormBase
 
 
     /**
-     * Subir datos del formulario
+     * Subir datos del formularios
      * @param array $form
      * @param FormStateInterface $form_state
      */
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
-        $this->subscribers->insert([
+        $this->subscribers->update($this->id , [
             'nickname' => $form_state->getValue('nickname'),
-            'email' => $form_state->getValue('email'),
-            'created' => \Drupal::time()->getRequestTime(),
+            'email' => $form_state->getValue('email')
         ]);
 
-        $this->messenger()->addStatus($this->t('¡Gracias! Te has suscrito correctamente.'));
+        $this->messenger()->addStatus($this->t('Se ha actualizado los datos correctamente'));
+        $form_state->setRedirect('newsletter.admin');
     }
 }

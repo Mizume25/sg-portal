@@ -1,0 +1,4 @@
+services:
+  newsletter.subscriber_storage:
+    class: Drupal\newsletter\NewsletterSubscriberStorage
+    arguments: ['@database']

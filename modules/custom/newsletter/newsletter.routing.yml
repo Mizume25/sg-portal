@@ -34,3 +34,14 @@ newsletter.delete:
   requirements:
     _permission: 'manage newsletter subscribers'
 
+# Editar un suscriptor
+newsletter.edit:
+  path: '/admin/content/newsletter/{id}/edit'
+  defaults:
+    _form: '\Drupal\newsletter\Form\SubscriberEditForm'
+    _title: 'Editar Suscriptor'
+  requirements:
+    _permission: 'manage newsletter subscribers'
+    id: \d+
+
+

@@ -1,0 +1,5 @@
+name: SG Core
+type: module
+description: 'Lógica de negocio compartida'
+core_version_requirement: ^10
+package: Custom
