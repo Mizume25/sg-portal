@@ -26,7 +26,7 @@ Backoffice de gestión de productos y noticias desarrollado como prueba técnica
 
 ### Productos
 - Campos minimos solicitados 
-- Nodo personalizado junyo a vista personalizada 
+- Nodo personalizado junto a vista personalizada 
 
 ### Newsletter
 - Modulo simple construido 
