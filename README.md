@@ -1,6 +1,6 @@
 <img alt="Drupal Logo" src="https://www.drupal.org/files/Wordmark_blue_RGB.png" height="60px">
 
-# SG-Portal · Backoffice
+# SG-Portal 
 
 Backoffice de gestión de productos y noticias desarrollado como prueba técnica para Studiogenesis.
 
@@ -10,7 +10,7 @@ Backoffice de gestión de productos y noticias desarrollado como prueba técnica
 
 ---
 
-## Acceso al backoffice
+## Acceso al portal web
 
 | Login  | Valor |
 |---|---|
