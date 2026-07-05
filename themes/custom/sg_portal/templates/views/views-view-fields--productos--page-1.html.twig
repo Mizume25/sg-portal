@@ -1,14 +1,21 @@
 <div class="card h-100 anime-scale anime-scale--card">
-  <div class="row g-0 h-100">
-    <div class="col-7 d-flex flex-column p-3">
-      <h5 class="card-title">{{ fields.title.content }}</h5>
-      <p>{{ fields.field_descripcion.content }}</p>
+	<div class="row g-0 h-100">
+		<div
+			class="col-7 d-flex flex-column p-3">
+			<!-- Titulo -->
+			<h5 class="card-title">{{ fields.title.content }}</h5>
+
+      <!-- Descripcion -->
+			<p>{{ fields.field_descripcion.content }}</p>
+			
+      <!-- Badge -->
       <span class="align-self-start d-inline-block badge {{ badge_class }} bg-secondary mb-2 px-3 py-1 fs-6">
-  <i class="bi bi-tags-fill"></i>  {{ fields.field_tipo_productos.content }}
-</span>
-    </div>
-    <div class="col-5">
-      {{ fields.field_foto.content }}
-    </div>
-  </div>
+				<i class="bi bi-tags-fill"></i>
+				{{ fields.field_tipo_productos.content }}
+			</span>
+		</div>
+		<div class="col-5">
+			{{ fields.field_foto.content }} <!-- Imagen -->
+		</div>
+	</div>
 </div>

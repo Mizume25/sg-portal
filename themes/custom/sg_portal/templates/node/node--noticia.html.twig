@@ -24,22 +24,27 @@
 
 
 			<!-- Autor -->
-			
+
 			<p class="text text-secondary">
 				Written by
-				<span class="text-dark fw-bold text-normal">{{ node.field_autor.value }} <i class="bi bi-person-circle fs-3"></i></span>
+				<span class="text-dark fw-bold text-normal">{{ node.field_autor.value }}
+					<i class="bi bi-person-circle fs-3"></i>
+				</span>
 			</p>
 
-			<p>	{{ node.field_fecha.value  }} <i class="bi bi-calendar-date-fill fs-2"></i></p>
+			<p>
+				{{ node.field_fecha.value  }}
+				<i class="bi bi-calendar-date-fill fs-2"></i>
+			</p>
 
 
 		</div>
-
+		<!-- Contenido -->
 		<section class="w-auto bg-body-secondary mt-2 p-4 rounded custom-height">
 			{{ content.body }}
 		</section>
 
-
+		<!-- Archivos Asociados -->
 		<footer class="card-footer">
 			<div class="mt-40">
 				<a class="enlarge">

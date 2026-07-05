@@ -37,12 +37,12 @@
 			<h5 class="badge {{ badge_class }} mb-2 px-3 py-1 bg-secondary fs-6 anime-scale ">
 				{{ content.field_tipo_productos }}
 			</h5>
+			<!-- Descripcion corta -->
+			<p class="fs-3 italic">{{ content.field_descripcion }}</p>
+			<!-- Tarifa -->
+			<p class="fs-2 fw-bold text-dark mb-0">{{ content.field_tarifa }}</p>
 
-      <p class="fs-3 italic">{{ content.field_descripcion }}</p>
-
-       <p class="fs-2 fw-bold text-dark mb-0">{{ content.field_tarifa }}</p>
-
-
+			<!-- Descripcion del Producto -->
 			<section class=" w-auto bg-body-secondary mt-2 p-4 rounded custom-height">
 				{{ content.body }}
 			</section>

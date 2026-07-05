@@ -13,7 +13,9 @@ use Twig\TwigFilter;
 
 class BadgeExtension extends AbstractExtension
 {
-
+    /**
+     * Tipos de campo
+     */
     private const FIELD_MAP = [
         'noticia'  => 'field_tipo_noticia',
         'producto' => 'field_tipo_productos',

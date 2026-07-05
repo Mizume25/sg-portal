@@ -20,3 +20,13 @@ a {
 
 
 .logo-style {object-fit: contain; width: 100px; height: 200px;}
+
+.views-view-responsive-grid__item {
+  display: flex;
+}
+.views-view-responsive-grid__item > * {
+  width: 100%;
+}
+.views-view-responsive-grid__item .card {
+  height: 100%;
+}

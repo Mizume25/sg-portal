@@ -1,13 +1,17 @@
 <div class="card mb-3 anime-scale anime-scale--card">
 	<div class="card-body">
+	<!-- Titulo -->
 		<h3 class="card-title">
 			{{ fields.title.content }}
 		</h3>
+
+		<!-- Categorias -->
 		<span class="badge {{ badge_class }} mb-2 px-3 py-1 fs-6 ">
 			<i class="bi bi-tags-fill"></i>
 			{{ fields.field_tipo_noticia.content }}
 		</span>
 
+		<!-- Autor y Fecha -->
 		<div class="w-auto d-flex align-items-center justify-content-start gap-3">
     		{{ fields.field_autor.content}}
 		
