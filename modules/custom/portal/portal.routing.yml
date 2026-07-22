@@ -1,0 +1,7 @@
+newsletter.portal:
+ path: '/portal'
+ defaults: 
+  _controller: '\Drupal\portal\Controller\PortalController::content'
+  _title: 'Modulo de Prueba'
+ requirements:
+   _access: 'TRUE'

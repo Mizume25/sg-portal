@@ -32,7 +32,8 @@ class NewsletterAdminController  extends ControllerBase
     {
         $head = [
             $this->t('ID'),
-            $this->t('Nickname'),
+            $this->t('Name'),
+            $this->t('Surname'),
             $this->t('Email'),
             $this->t('Fecha de alta'),
             $this->t('Operaciones'),
@@ -53,7 +54,8 @@ class NewsletterAdminController  extends ControllerBase
             /** Construyendo los datos  */
             $rows[] = [
                 $reg->id,
-                $reg->nickname,
+                $reg->name,
+                $reg->surname,
                 $reg->email,
                 Drupal::service('date.formatter')->format($reg->created, 'short'),
                 Link::fromTextAndUrl($this->t('Editar'), $edit),
@@ -90,13 +92,14 @@ class NewsletterAdminController  extends ControllerBase
         $salida = fopen('php://temp', 'r+');
 
         // Fila de cabeceras del CSV.
-        fputcsv($salida, ['ID', 'NickName',  'Email', 'Fecha de alta']);
+        fputcsv($salida, ['ID', 'Name' , 'Surname',  'Email', 'Fecha de alta']);
 
         // Una fila por suscriptor.
         foreach ($reg as $r) {
             fputcsv($salida, [
                 $r->id,
-                $r->nickname,
+                $r->name,
+                $r->surname,
                 $r->email,
                 date('d/m/Y H:i', $r->created),
             ]);

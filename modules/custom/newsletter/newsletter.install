@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 /**
  * 
@@ -6,44 +7,113 @@
  */
 
 
-function newsletter_schema() {
-    
-$schema['newsletter_subscribers'] = [
-  'description' => 'Almacena los emails dados de alta en el newsletter.',
-  'fields' => [
-    'id' => [
-      'description' => 'Id unico del registro',
-      'type' => 'serial',
-      'unsigned' => TRUE,
-      'not null' => TRUE,
-    ],
-    'nickname' => [
-      'type' => 'varchar',
-      'length' => 255,
-      'not null' => TRUE,
 
-      'description' => 'NickName de un suscriptor',
-    ],
-    'email' => [
-      'type' => 'varchar',
-      'length' => 255,
-      'not null' => TRUE,
-      'description' => 'Email del suscriptor.',
-    ],
-    'created' => [
-      'type' => 'int',
-      'not null' => TRUE,
-      'default' => 0,
-      'description' => 'Fecha de alta (timestamp).',
-    ],
-  ],
-  'primary key' => ['id'],
-  'unique keys' => [
-    'email' => ['email'],
-    'nickname' => ['nickname'],
-  ],
-];
+function newsletter_schema()
+{
 
-return $schema;
+  $schema['newsletter_subscribers'] = [
+    'description' => 'Almacena los emails dados de alta en el newsletter.',
+    'fields' => [
+      'id' => [
+        'description' => 'Id unico del registro',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nickname' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+
+        'description' => 'NickName de un suscriptor',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Email del suscriptor.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Fecha de alta (timestamp).',
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'email' => ['email'],
+      'nickname' => ['nickname'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/** 21/07/2026 - Campo nickname borrado */
+function newsletter_update_10000()
+{
+  $schema = \Drupal::database()->schema();
+
+  if ($schema->fieldExists('newsletter_subscribers', 'nickname')) $schema->dropField('newsletter_subscribers', 'nickname');
+  
+}
+
+
+/* 21/07/2025 - Campo de nombre añadido */
+function newsletter_update_10001() 
+{
+  $schema = \Drupal::database()->schema();
+
+  $spec = [
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'description' => 'Campo de nombre de usuario'
+  ];
+
+  if(!$schema->fieldExists('newsletter_subscribers', 'name')) $schema->addField('newsletter_subscribers' , 'name', $spec);
+
+  
 
 }
+
+/** 21/07/2025 - Campo de apellido añadido */
+function newsletter_update_10002() 
+{
+  $schema = \Drupal::database()->schema();
+
+  $spec = [
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'description' => 'Campo de apellido de usuario'
+  ];
+
+  if(!$schema->fieldExists('newsletter_subscribers', 'surname')) $schema->addField('newsletter_subscribers', 'surname', $spec);
+}
+
+
+
+/* 21/07/2025 - Pruebas de campos generales  */
+function newsletter_update_10003() 
+{
+  $schema = \Drupal::database()->schema();
+
+  $spec = [
+    'type' => 'varchar',
+    'length' => 100,
+    'not null' => TRUE,
+    'description' => 'Campo de nombre de usuario'
+  ];
+
+  if($schema->fieldExists('newsletter_subscribers', 'name')) $schema->changeField('newsletter_subscribers', 'name', 'name', $spec);
+
+  
+}
+
+
+
+
+
+

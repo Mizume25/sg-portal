@@ -25,7 +25,7 @@ class NewsletterSubscriberStorage
     public function all()
     {
         $reg = $this->DB->select('newsletter_subscribers', 'n')
-            ->fields('n', ['id', 'nickname', 'email', 'created'])
+            ->fields('n', ['id', 'name' , 'surname', 'email', 'created'])
             ->orderBy('created', 'DESC')
             ->execute();
 
@@ -41,7 +41,7 @@ class NewsletterSubscriberStorage
         if (!$id) return;
 
         $reg = $this->DB->select('newsletter_subscribers', 'n')
-            ->fields('n', ['id', 'nickname', 'email', 'created'])
+            ->fields('n', ['id', 'name' , 'surname', 'email', 'created'])
             ->condition('id', $id)
             ->execute()
             ->fetchAssoc();
@@ -58,7 +58,8 @@ class NewsletterSubscriberStorage
     {
         $this->DB->insert('newsletter_subscribers')
             ->fields([
-                'nickname' => $data['nickname'],
+                'name' => $data['name'],
+                'surname' => $data['surname'],
                 'email' => $data['email'],
                 'created' => $data['created'],
             ])
@@ -76,7 +77,8 @@ class NewsletterSubscriberStorage
     {
         $this->DB->update('newsletter_subscribers',)
             ->fields([
-                'nickname' => $data['nickname'],
+                'name' => $data['name'],
+                'surname' => $data['surname'],
                 'email' => $data['email'],
             ])
             ->condition('id', $id)
@@ -104,8 +106,9 @@ class NewsletterSubscriberStorage
      */
     public function exists(string $field, string $value, ?int $excludeId = null): bool
     {
-        /*** Campos que podemos comrpobar */
-        $allowedFields = ['email', 'nickname'];
+        /*** Campos que podemos comprobar */
+        $allowedFields = ['email', 'name' , 'surname'];
+
         if (!in_array($field, $allowedFields, true)) throw new \InvalidArgumentException("Campo no permitido: $field");
 
 

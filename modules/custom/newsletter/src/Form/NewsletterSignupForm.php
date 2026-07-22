@@ -53,12 +53,20 @@ class NewsletterSignupForm extends FormBase
     public function buildForm(array $form, FormStateInterface $form_state)
     {
 
-        /** Campo de nicknam */
-        $form['nickname'] = [
+        /** Nombre */
+        $form['name'] = [
             '#type' => 'textfield',
-            '#title' => $this->t('Tu nickname'),
+            '#title' => $this->t('Tu nombre'),
             '#required' => TRUE,
         ];
+
+        /** Apellido */
+        $form['surname'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Tu apellido'),
+            '#required' => TRUE,
+        ];
+
         /**
          * Validando campo de correo electronico
          */
@@ -92,10 +100,6 @@ class NewsletterSignupForm extends FormBase
         $email = $this->subscribers->exists('email', $form_state->getValue('email'));
 
         if ($email) $form_state->setErrorByName('email', $this->t('Este email ya esta suscrito'));
-
-        $nickname = $this->subscribers->exists('nickname', $form_state->getValue('nickname'));
-
-        if ($nickname) $form_state->setErrorByName('nickname', $this->t('Este nickname ya esta suscrito'));
     }
 
 
@@ -108,7 +112,8 @@ class NewsletterSignupForm extends FormBase
     public function submitForm(array &$form, FormStateInterface $form_state)
     {
         $this->subscribers->insert([
-            'nickname' => $form_state->getValue('nickname'),
+            'name' => $form_state->getValue('name'),
+            'surname' => $form_state->getValue('surname'),
             'email' => $form_state->getValue('email'),
             'created' => \Drupal::time()->getRequestTime(),
         ]);

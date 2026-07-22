@@ -23,6 +23,7 @@
         "drupal/core-recommended": "^10.6",
         "drupal/core-vendor-hardening": "^10.6",
         "drupal/devel": "^5.4",
+        "drupal/pdf_serialization": "^2.2",
         "drupal/twbstools": "^2.1",
         "drush/drush": "^13.6"
     },

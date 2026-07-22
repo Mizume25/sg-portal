@@ -1,0 +1,5 @@
+name: Portal
+type: module
+description:  'Prueba de module'
+package: Custom
+core_version_requirement: ^9 || ^10 || ^11
